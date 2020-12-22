@@ -6,17 +6,6 @@ Santos, Cicero dos, Ming Tan, Bing Xiang, and Bowen Zhou. "Attentive pooling net
 
 This project contains 4 models: QA-CNN, QA-biLSTM, AP-CNN and AP-biLSTM
 
-# Warning
-
-**该项目尚未调试完成，效果极差，请不要用于科研实验！我将在时间充裕时继续调试！  
-若您发现该代码效果差的原因，恳请您在issue去告知我，不胜感激！-- 2020.12.22**  
-**The project has not yet been successful, the performance is very POOR,
-please DO NOT use it for scientific research experiment!
-I will continue debugging when I have enough time!  
-If you find out the reason for the poor performance of the code,
-please tell me at issue.
-Thank you very much-- 12.22, 2020**
-
 # Environments
   + python 3.8
   + pytorch 1.7
@@ -43,7 +32,7 @@ python test.py --net_name AP-CNN --model_file model/best_model.pt
 
 # Experiment
 
-<table>
+<table align="center">
     <tr>
         <th>Hyper parameter</th>
         <th>QA-CNN</th>
@@ -60,11 +49,17 @@ python test.py --net_name AP-CNN --model_file model/best_model.pt
     </tr>
     <tr>
         <td>lr decay</td>
-        <td colspan="4">Exponential(gamma=0.98)</td>
+        <td colspan="4">Exponential(gamma=0.99)</td>
     </tr>
     <tr>
         <td>l2 regularization</td>
         <td colspan="4">1e-6</td>
+    </tr>
+    <tr>
+        <td>loss margin</td>
+        <td colspan="2">0.2</td>
+        <td>0.5</td>
+        <td>0.2</td>
     </tr>
     <tr>
         <td>test1 accuracy</td>
@@ -74,3 +69,13 @@ python test.py --net_name AP-CNN --model_file model/best_model.pt
         <td>-</td>
     </tr>
 </table>
+
+# Warning
+**该项目尚未调试完成，效果远远没有论文中的实验结果好，请不要用于科研实验！我将在时间充裕时继续调试！  
+若您发现该代码效果差的原因，恳请您在issue区告知我，不胜感激！-- 2020.12.22**  
+**The project has not yet been successful, the performance is very POOR,
+please DO NOT use it for scientific research experiment!
+I will continue debugging when I have enough time!  
+If you find out the reason for the poor performance of the code,
+please tell me at issue.
+Thank you very much-- 12.22, 2020**

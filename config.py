@@ -13,7 +13,7 @@ class Config:
     lr_decay = 'Exponential'
     lr_decay_gamma = 0.99  # lr decay base number of ExponentialLR
     l2_regularization = 1e-6
-    loss_margin = 0.2
+    loss_margin = 0.5
 
     answer_dict_file = 'data/insuranceQA/answers.label.token_idx'
     qa_vocab_file = 'data/insuranceQA/vocabulary'
