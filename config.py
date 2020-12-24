@@ -6,14 +6,14 @@ import torch
 class Config:
     device = torch.device("cuda:0")
     # device = torch.device("cpu")
-    train_epochs = 100
-    batch_size = 64
-    learning_rate = 0.05
-    # lr_decay = 'Reciprocal'
-    lr_decay = 'Exponential'
-    lr_decay_gamma = 0.99  # lr decay base number of ExponentialLR
+    train_epochs = 20
+    batch_size = 20
+    learning_rate = 1.1
+    lr_decay = 'Reciprocal'
+    # lr_decay = 'Exponential'
+    lr_decay_gamma = 0.92  # lr decay base number of ExponentialLR
     l2_regularization = 1e-6
-    loss_margin = 0.5
+    loss_margin = 0.1
 
     answer_dict_file = 'data/insuranceQA/answers.label.token_idx'
     qa_vocab_file = 'data/insuranceQA/vocabulary'
@@ -24,19 +24,19 @@ class Config:
 
     word2vec_file = 'embedding/glove.6B.100d.txt'
     punctuation_file = 'data/punctuations.txt'
-    model_file = 'model/saved_model.pt'
+    trained_model = 'model/model_name_here'  # The trained model saved from training and uses in testing
 
-    train_neg_count = 50  # Multiple of negative samples for training dataset
+    train_neg_count = 50  # Amount of random negative answers for every question in training
     q_length = 20
     a_length = 100
     PAD_WORD = '<UNK>'
-    # net_name = 'QA-CNN'
-    # net_name = 'QA-biLSTM'
-    net_name = 'AP-CNN'
-    # net_name = 'AP-biLSTM'
+    # model_name = 'QA-CNN'
+    model_name = 'QA-biLSTM'
+    # model_name = 'AP-CNN'
+    # model_name = 'AP-biLSTM'
     kernel_count = 400
     kernel_size = 3
-    rnn_hidden = 300
+    rnn_hidden = 150
 
     def __init__(self):
         attributes = inspect.getmembers(self, lambda a: not inspect.isfunction(a))
@@ -51,7 +51,7 @@ class Config:
     def __str__(self):
         attributes = inspect.getmembers(self, lambda a: not inspect.isfunction(a))
         attributes = list(filter(lambda x: not x[0].startswith('__'), attributes))
-        to_str = ''
+        to_str = 'Global Config:\n'
         for key, val in attributes:
-            to_str += '{} = {}\n'.format(key, val)
+            to_str += '\t{} = {}\n'.format(key, val)
         return to_str

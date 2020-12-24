@@ -1,7 +1,9 @@
-import random
+import logging
+import sys
 import time
 from collections import defaultdict
 
+import numpy as np
 import torch
 from torch.utils.data import Dataset
 
@@ -10,12 +12,30 @@ def date(f='%Y-%m-%d %H:%M:%S'):
     return time.strftime(f, time.localtime())
 
 
+def get_logger(log_file=None, file_level=logging.INFO, stdout_level=logging.DEBUG, logger_name=__name__):
+    logging.root.setLevel(0)
+    formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+    _logger = logging.getLogger(logger_name)
+
+    if log_file is not None:
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setLevel(level=file_level)
+        file_handler.setFormatter(formatter)
+        _logger.addHandler(file_handler)
+
+    stream_handler = logging.StreamHandler(sys.stdout)
+    stream_handler.setLevel(level=stdout_level)
+    stream_handler.setFormatter(formatter)
+    _logger.addHandler(stream_handler)
+    return _logger
+
+
 def process_bar(percent, start_str='', end_str='', auto_rm=True):
     bar = '=' * int(percent * 50)
     bar = '\r{}|{}| {:.1%} | {}'.format(start_str, bar.ljust(50), percent, end_str)
     print(bar, end='', flush=True)
     if percent == 1:
-        print(end='\r' if auto_rm else '\n', flush=True)
+        print(end=('\r' + ' ' * 100 + '\r') if auto_rm else '\n', flush=True)
 
 
 def load_embedding(word2vec_file):
@@ -34,11 +54,14 @@ def load_embedding(word2vec_file):
 
 def evaluate(model, dataloader, device):
     predict = defaultdict(list)
+    total = 0
     for batch in dataloader:
         qid, q, a, y = batch
         cos = model(q.to(device), a.to(device))
         for i, pred, label in zip(qid.numpy(), cos.detach().cpu().numpy(), y.numpy()):
             predict[i].append((pred, label))
+        total += len(qid)
+        process_bar(total / len(dataloader.dataset), start_str='Evaluation ')
     accuracy = 0
     MRR = 0
     for p in predict.values():
@@ -74,29 +97,28 @@ class IQADataset(Dataset):
             return [word_dict.get(w.lower(), pad_num) for w in sent[:p_len]] + [pad_num] * (p_len - len(sent))
 
         if mode == 'train':
-            quests, answer1, answer2 = [], [], []
+            quests, answer_pos, answer_neg = [], [], []
             with open(qa_file, 'r') as f:
                 for line in f.readlines():
                     i = line.strip().split('\t')
                     quest = [qa_vocab[idx] for idx in i[0].split()]
                     pos_ans = set(i[1].split())
                     for ans_id in pos_ans:
-                        ans1 = [qa_vocab[idx] for idx in answer_dict[ans_id]]
-                        neg_ans_ids = set()  # answer ids had sampled
-                        for j in range(config.train_neg_count):
-                            while True:
-                                k = random.randint(1, len(answer_dict) - 1)
-                                if str(k) not in pos_ans and k not in neg_ans_ids:
-                                    break
-                                neg_ans_ids.add(k)
-                            ans2 = [qa_vocab[idx] for idx in answer_dict[str(k)]]
-                            quests.append(sent_process(quest, config.q_length))
-                            answer1.append(sent_process(ans1, config.a_length))
-                            answer2.append(sent_process(ans2, config.a_length))
+                        ans_pos = [qa_vocab[idx] for idx in answer_dict[ans_id]]
+                        quests.append(sent_process(quest, config.q_length))
+                        answer_pos.append(sent_process(ans_pos, config.a_length))
+                        answer_neg.append([])
+                        neg_ans_ids = set()  # negative sample
+                        while len(neg_ans_ids) < config.train_neg_count:
+                            rand_idx = np.random.randint(1, len(answer_dict), config.train_neg_count * 2)
+                            neg_ans_ids = set([i for i in rand_idx if i not in pos_ans][:config.train_neg_count])
+                        for k in neg_ans_ids:
+                            ans_neg = [qa_vocab[idx] for idx in answer_dict[str(k)]]
+                            answer_neg[-1].append(sent_process(ans_neg, config.a_length))
 
             self.q = torch.LongTensor(quests)
-            self.a1 = torch.LongTensor(answer1)
-            self.a2 = torch.LongTensor(answer2)
+            self.a_pos = torch.LongTensor(answer_pos)
+            self.a_neg = torch.LongTensor(answer_neg)
         else:
             qids, quests, answers, labels = [], [], [], []
             with open(qa_file, 'r') as f:
@@ -120,19 +142,14 @@ class IQADataset(Dataset):
 
     def __getitem__(self, idx):
         if self.mode == 'train':
-            return self.q[idx], self.a1[idx], self.a2[idx]
+            return self.q[idx], self.a_pos[idx], self.a_neg[idx]
         return self.qid[idx], self.q[idx], self.a[idx], self.y[idx]
 
     def __len__(self):
         return self.q.shape[0]
 
-    def print_info(self):
-        print("-------  数据集{}  ---------".format(self.mode))
-        print('样本数量：', len(self.q))
-        if self.mode in ['test', 'valid']:
-            print('正样本数量：', sum(self.y))
-            print('负样本数量：', len(self.y) - sum(self.y))
-        print("-------------------------------")
+    def __str__(self):
+        return f'Dataset {self.mode}: {len(self.q)} samples.'
 
 
 # The following delay way of learning rate is proposed by the author of paper "Attentive Pooling Networks"

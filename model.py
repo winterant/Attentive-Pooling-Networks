@@ -49,18 +49,19 @@ class CoAttention(nn.Module):
 class QAModel(nn.Module):
 
     def __init__(self, config, word_emb):
-        assert config.net_name in ['QA-CNN', 'QA-biLSTM', 'AP-CNN', 'AP-biLSTM'], 'Net name is incorrect!'
+        assert config.model_name in ['QA-CNN', 'QA-biLSTM', 'AP-CNN', 'AP-biLSTM'], 'Net name is incorrect!'
         super().__init__()
-        self.net_name = config.net_name
+        self.model_name = config.model_name
         self.embedding = nn.Embedding.from_pretrained(torch.Tensor(word_emb))
+        self.embedding.weight.requires_grad_()
 
-        if 'CNN' in config.net_name:
+        if 'CNN' in config.model_name:
             self.encode = CNN(self.embedding.embedding_dim, config.kernel_count, config.kernel_size)
-            if 'AP' in config.net_name:
+            if 'AP' in config.model_name:
                 self.coAttention = CoAttention(config.kernel_count)
-        elif 'biLSTM' in config.net_name:
+        elif 'biLSTM' in config.model_name:
             self.encode = BiLSTM(self.embedding.embedding_dim, config.rnn_hidden)
-            if 'AP' in config.net_name:
+            if 'AP' in config.model_name:
                 self.coAttention = CoAttention(config.rnn_hidden * 2)
 
     def forward(self, questions, answers):
@@ -68,7 +69,7 @@ class QAModel(nn.Module):
         a_emb = self.embedding(answers)
         Q = self.encode(q_emb)
         A = self.encode(a_emb)
-        if 'AP' in self.net_name:
+        if 'AP' in self.model_name:
             rq, ra = self.coAttention(Q, A)
         else:
             rq = Q.max(dim=-1).values
