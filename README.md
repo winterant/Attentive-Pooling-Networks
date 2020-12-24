@@ -33,6 +33,7 @@ python test_only.py --model_name QA-biLSTM --trained_model QA-biLSTM20201224_105
 # Experiment
 
 <table align="center">
+    <caption>Key Hyper Parameters (in `config.py`)</caption>
     <tr>
         <th>Hyper parameter</th>
         <th>QA-CNN</th>
@@ -75,9 +76,14 @@ python test_only.py --model_name QA-biLSTM --trained_model QA-biLSTM20201224_105
         <td align="center">0.2</td>
         <td align="center">-</td>
     </tr>
+    <tr>
+        <td align="center">kernel count/size</td>
+        <td align="center">4000/3</td>
+        <td align="center">-</td>
+        <td align="center">400/3</td>
+        <td align="center">-</td>
+    </tr>
 </table>
-
-**Other hyper parameters**: View at `config.py`
 
 **Note1**: In the training, I randomly sample 50 negative answer 
 from whole answer pool for every question,
@@ -87,15 +93,49 @@ to update our trainable parameters.
 **Note2**: In the training, I make word embedding to be trainable 
 and initialize to pre-trained word embedding.
 
----
-Result of accuracy:
 
-| Model Name | dev | test1 | test2 |
-|---|---|---|---|
-| QA-CNN | - | - | - |
-| QA-biLSTM | 66.60% | 67.89% | 63.67% |
-| AP-CNN | 54.80% | 53.61% | 50.61% |
-| AP-biLSTM | - | - | - |
+<table align="center">
+    <caption>Accuracy</caption>
+    <thead>
+        <tr>
+            <th>Model Name</th>
+            <th>dev</th>
+            <th>test1</th>
+            <th>test2</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>QA-CNN</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>QA-biLSTM</td>
+            <td>66.60%</td>
+            <td>67.89%</td>
+            <td>63.67%</td>
+        </tr>
+        <tr>
+            <td>AP-CNN</td>
+            <td>54.80%</td>
+            <td>53.61%</td>
+            <td>50.61%</td>
+        </tr>
+        <tr>
+            <td>AP-biLSTM</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+        </tr>
+    </tbody>
+</table>
+
+**Note**: Accuracy is equivalent to precision at top one answer
+among about 500 answers for every question.
+In other words, it's correct if the model find out a right answer
+among a set of 500 answers which contains 1~3 right answers.
 
 # Warning
 
