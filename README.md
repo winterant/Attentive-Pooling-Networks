@@ -33,7 +33,6 @@ python test_only.py --model_name QA-biLSTM --trained_model QA-biLSTM20201224_105
 # Experiment
 
 <table align="center">
-    <caption>Key Hyper Parameters (in `config.py`)</caption>
     <tr>
         <th>Hyper parameter</th>
         <th>QA-CNN</th>
@@ -95,10 +94,9 @@ and initialize to pre-trained word embedding.
 
 
 <table align="center">
-    <caption>Accuracy</caption>
     <thead>
         <tr>
-            <th>Model Name</th>
+            <th>Accuracy</th>
             <th>dev</th>
             <th>test1</th>
             <th>test2</th>
@@ -114,7 +112,7 @@ and initialize to pre-trained word embedding.
         <tr>
             <td>QA-biLSTM</td>
             <td>66.60%</td>
-            <td>67.89%</td>
+            <td><b>67.89%</b></td>
             <td>63.67%</td>
         </tr>
         <tr>
