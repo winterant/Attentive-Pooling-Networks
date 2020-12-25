@@ -93,6 +93,7 @@ if __name__ == '__main__':
     save_path = f'model/{config.model_name}{start_dt}.pt'
     os.makedirs(os.path.dirname(save_path), exist_ok=True)  # mkdir if not exist
     train(train_dlr, valid_dlr, Model, config, save_path)
+    del train_data, train_dlr, valid_data
 
     # Dev
     test(valid_dlr, torch.load(save_path))

@@ -96,25 +96,28 @@ class IQADataset(Dataset):
         def sent_process(sent, p_len):  # vocab to id -> padding
             return [word_dict.get(w.lower(), pad_num) for w in sent[:p_len]] + [pad_num] * (p_len - len(sent))
 
+        for k, v in answer_dict.items():
+            ans = [qa_vocab[idx] for idx in answer_dict[k]]
+            answer_dict[k] = sent_process(ans, config.a_length)
+
         if mode == 'train':
             quests, answer_pos, answer_neg = [], [], []
             with open(qa_file, 'r') as f:
                 for line in f.readlines():
                     i = line.strip().split('\t')
                     quest = [qa_vocab[idx] for idx in i[0].split()]
+                    quest = sent_process(quest, config.q_length)
                     pos_ans = set(i[1].split())
                     for ans_id in pos_ans:
-                        ans_pos = [qa_vocab[idx] for idx in answer_dict[ans_id]]
-                        quests.append(sent_process(quest, config.q_length))
-                        answer_pos.append(sent_process(ans_pos, config.a_length))
+                        quests.append(quest)
+                        answer_pos.append(answer_dict[ans_id])
                         answer_neg.append([])
                         neg_ans_ids = set()  # negative sample
                         while len(neg_ans_ids) < config.train_neg_count:
                             rand_idx = np.random.randint(1, len(answer_dict), config.train_neg_count * 2)
                             neg_ans_ids = set([i for i in rand_idx if i not in pos_ans][:config.train_neg_count])
                         for k in neg_ans_ids:
-                            ans_neg = [qa_vocab[idx] for idx in answer_dict[str(k)]]
-                            answer_neg[-1].append(sent_process(ans_neg, config.a_length))
+                            answer_neg[-1].append(answer_dict[str(k)])
 
             self.q = torch.LongTensor(quests)
             self.a_pos = torch.LongTensor(answer_pos)
@@ -125,12 +128,12 @@ class IQADataset(Dataset):
                 for idx, line in enumerate(f.readlines()):
                     i = line.strip().split('\t')
                     quest = [qa_vocab[idx] for idx in i[1].split()]
+                    quest = sent_process(quest, config.q_length)
                     pos_ans = set(i[0].split())
                     for j in set(list(pos_ans) + i[2].split()):
-                        ans = [qa_vocab[idx] for idx in answer_dict[j]]
                         qids.append(idx)
-                        quests.append(sent_process(quest, config.q_length))
-                        answers.append(sent_process(ans, config.a_length))
+                        quests.append(quest)
+                        answers.append(answer_dict[j])
                         labels.append(1 if j in pos_ans else 0)
                     # if idx == 100:
                     #     break

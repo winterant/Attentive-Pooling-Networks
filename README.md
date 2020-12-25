@@ -27,7 +27,7 @@ python main.py --model_name QA-biLSTM
 
 Only test:
 ```
-python test_only.py --model_name QA-biLSTM --trained_model QA-biLSTM20201224_105449.pt
+python test_only.py --model_name QA-biLSTM --trained_model model/QA-biLSTM20201224_105449.pt
 ```
 
 # Experiment
@@ -42,45 +42,52 @@ python test_only.py --model_name QA-biLSTM --trained_model QA-biLSTM20201224_105
     </tr>
     <tr>
         <td align="center">epoch size</td>
-        <td align="center">-</td>
+        <td align="center">10</td>
         <td align="center">20</td>
         <td align="center">150</td>
         <td align="center">-</td>
     </tr>
     <tr>
         <td align="center">batch size</td>
-        <td align="center">-</td>
+        <td align="center">20</td>
         <td align="center">20</td>
         <td align="center">20</td>
         <td align="center">-</td>
     </tr>
     <tr>
-        <td align="center">learning rate</td>
-        <td align="center">-</td>
+        <td align="center">init. learning rate</td>
+        <td align="center">0.1</td>
         <td align="center">1.1</td>
         <td align="center">1.1</td>
         <td align="center">-</td>
     </tr>
     <tr>
         <td align="center">lr decay</td>
-        <td align="center">Exponential(gamma=0.99)</td>
+        <td align="center">Exponential(0.92)</td>
         <td align="center">Reciprocal</td>
         <td align="center">Reciprocal</td>
         <td align="center">-</td>
     </tr>
     <tr>
         <td align="center">loss margin</td>
-        <td align="center">-</td>
+        <td align="center">0.1</td>
         <td align="center">0.1</td>
         <td align="center">0.2</td>
         <td align="center">-</td>
     </tr>
     <tr>
         <td align="center">kernel count/size</td>
-        <td align="center">4000/3</td>
-        <td align="center">-</td>
+        <td align="center">4000/2</td>
+        <td align="center"></td>
         <td align="center">400/3</td>
-        <td align="center">-</td>
+        <td align="center"></td>
+    </tr>
+    <tr>
+        <td align="center">rnn hidden size</td>
+        <td align="center"></td>
+        <td align="center">150</td>
+        <td align="center"></td>
+        <td align="center">150</td>
     </tr>
 </table>
 
@@ -94,53 +101,49 @@ and initialize to pre-trained word embedding.
 
 
 <table align="center">
-    <thead>
-        <tr>
-            <th>Accuracy</th>
-            <th>dev</th>
-            <th>test1</th>
-            <th>test2</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>QA-CNN</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>QA-biLSTM</td>
-            <td>66.60%</td>
-            <td><b>67.89%</b></td>
-            <td>63.67%</td>
-        </tr>
-        <tr>
-            <td>AP-CNN</td>
-            <td>54.80%</td>
-            <td>53.61%</td>
-            <td>50.61%</td>
-        </tr>
-        <tr>
-            <td>AP-biLSTM</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
-        </tr>
-    </tbody>
+    <tr>
+        <th>Accuracy</th>
+        <th>dev</th>
+        <th>test1</th>
+        <th>test2</th>
+    </tr>
+    <tr>
+        <td>QA-CNN</td>
+        <td>60.80%</td>
+        <td>62.72%</td>
+        <td>59.06%</td>
+    </tr>
+    <tr>
+        <td>QA-biLSTM</td>
+        <td>66.60%</td>
+        <td>67.89%</td>
+        <td>63.67%</td>
+    </tr>
+    <tr>
+        <td>AP-CNN</td>
+        <td>54.80%</td>
+        <td>53.61%</td>
+        <td>50.61%</td>
+    </tr>
+    <tr>
+        <td>AP-biLSTM</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+    </tr>
 </table>
 
 **Note**: Accuracy is equivalent to precision at top one answer
 among about 500 answers for every question.
-In other words, it's correct if the model find out a right answer
+In other words, it's considered to be correct if the model find out a right answer
 among a set of 500 answers which contains 1~3 right answers.
 
 # Warning
 
-**该项目尚未调试完成，效果没有论文中的实验结果好，请暂时不要用于科研实验！我将继续调试！  
-若您发现该代码效果差的原因，恳请您在issue区告知我，不胜感激！-- 2020.12.22**  
-**The project has not yet been successful, the performance is very POOR,
-please DO NOT use it for scientific research experiment!
+**该项目尚未调试完成，加入attention之后的效果不好！我还在继续调试！  
+若您发现效果差的原因，恳请您在issue区告知我，不胜感激！-- 2020.12.22**  
+**The project has not yet been successful, the performance with attention is POOR,
+please DO NOT use it for experiment!
 I will continue debugging when I have enough time!  
 If you find out the reason for the poor performance of the code,
 please tell me at issue.

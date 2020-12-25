@@ -24,7 +24,7 @@ class Config:
 
     word2vec_file = 'embedding/glove.6B.100d.txt'
     punctuation_file = 'data/punctuations.txt'
-    trained_model = 'model/model_name_here'  # The trained model saved from training and uses in testing
+    trained_model = 'model/model_name_here'  # The trained model, uses in test_only.py
 
     train_neg_count = 50  # Amount of random negative answers for every question in training
     q_length = 20
