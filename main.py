@@ -76,12 +76,9 @@ if __name__ == '__main__':
     word_emb, word_dict = load_embedding(config.word2vec_file)
 
     logger.debug(f'Loading dataset')
-    try:
-        f = open(os.path.abspath(f'data/train_neg{config.train_neg_count}.pkl'), 'rb')
-        train_data = pickle.load(f)
-    except:
-        train_data = IQADataset(word_dict, config, config.qa_train_file, mode='train')
-        pickle.dump(train_data, open(os.path.abspath(f'data/train_neg{config.train_neg_count}.pkl'), 'wb'))
+    train_data = IQADataset(word_dict, config, config.qa_train_file, mode='train')
+    # pickle.dump(train_data, open(os.path.abspath(f'data/train_neg{config.train_neg_count}.pkl'), 'wb'))
+    # train_data = pickle.load(open(os.path.abspath(f'data/train_neg{config.train_neg_count}.pkl'), 'rb'))
     valid_data = IQADataset(word_dict, config, config.qa_dev_file, mode='valid')
     logger.info(train_data)
     logger.info(valid_data)
