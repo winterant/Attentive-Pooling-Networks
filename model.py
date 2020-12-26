@@ -35,8 +35,8 @@ class CoAttention(nn.Module):
     def forward(self, Q, A):
         G = Q.transpose(-1, -2) @ self.U.expand(Q.shape[0], -1, -1) @ A
         G = torch.tanh(G)
-        Q_pooling = G.max(dim=-1).values
-        A_pooling = G.max(dim=-2).values
+        Q_pooling = G.max(dim=-1)[0]
+        A_pooling = G.max(dim=-2)[0]
         Q_pooling = Q_pooling.softmax(dim=-1)
         A_pooling = A_pooling.softmax(dim=-1)
         rq = Q @ Q_pooling.unsqueeze(-1)
