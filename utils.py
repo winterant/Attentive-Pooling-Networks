@@ -35,7 +35,7 @@ def process_bar(percent, start_str='', end_str='', auto_rm=True):
     bar = '\r{}|{}| {:.1%} | {}'.format(start_str, bar.ljust(50), percent, end_str)
     print(bar, end='', flush=True)
     if percent == 1:
-        print(end=('\r' + ' ' * 100 + '\r') if auto_rm else '\n', flush=True)
+        print(end=('\r' + ' ' * len(bar) + '\r') if auto_rm else '\n', flush=True)
 
 
 def load_embedding(word2vec_file):
