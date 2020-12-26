@@ -7,7 +7,7 @@ class Config:
     device = torch.device("cuda:0")
     # device = torch.device("cpu")
     train_epochs = 20
-    batch_size = 64
+    batch_size = 20
     test_batch_size = 128
     learning_rate = 1.1
     lr_decay = 'Reciprocal'

@@ -90,7 +90,7 @@ if __name__ == '__main__':
 
     # Train
     Model = QAModel(config, word_emb).to(config.device)
-    Model = torch.nn.DataParallel(Model)
+    # Model = torch.nn.DataParallel(Model)
     save_path = f'model/{config.model_name}{start_dt}.pt'
     os.makedirs(os.path.dirname(save_path), exist_ok=True)  # mkdir if not exist
     train(train_dlr, valid_dlr, Model, config, save_path)
@@ -98,7 +98,7 @@ if __name__ == '__main__':
 
     logger.debug('Start to evaluate')
     Model = torch.load(save_path)
-    Model = torch.nn.DataParallel(Model)
+    # Model = torch.nn.DataParallel(Model)
     # Dev
     test(valid_data, config.test_batch_size, Model)
 
