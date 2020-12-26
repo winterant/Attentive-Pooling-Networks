@@ -34,12 +34,12 @@ def train(train_dataloader, valid_dataloader, model, config, model_path):
             cos_neg = model(input_q, input_a)
             cos_neg = cos_neg.view(len(q), -1).max(dim=-1).values
 
-            loss = torch.max(torch.zeros(1).to(config.device), config.loss_margin - cos_pos + cos_neg).sum()
+            loss = torch.max(torch.zeros(1).to(config.device), config.loss_margin - cos_pos + cos_neg).mean()
             opt.zero_grad()
             loss.backward()
             opt.step()
 
-            total_loss += loss.item()
+            total_loss += loss.item() * len(q)
             total_samples += len(q)
             process_bar(total_samples / len(train_dataloader.dataset), start_str=f'Epoch {epoch}')
         curr_lr = lr_sch.get_last_lr()[0]
@@ -87,6 +87,7 @@ if __name__ == '__main__':
 
     # Train
     Model = QAModel(config, word_emb).to(config.device)
+    # Model = torch.nn.DataParallel(Model)
     save_path = f'model/{config.model_name}{start_dt}.pt'
     os.makedirs(os.path.dirname(save_path), exist_ok=True)  # mkdir if not exist
     train(train_dlr, valid_dlr, Model, config, save_path)
