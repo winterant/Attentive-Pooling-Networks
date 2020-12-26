@@ -92,12 +92,12 @@ python test_only.py --model_name QA-biLSTM --trained_model model/QA-biLSTM202012
     </tr>
 </table>
 
-**Note1**: In the training, I randomly sample 50 negative answer 
+**Note 1**: In the training, I randomly sample 50 negative answer 
 from whole answer pool for every question,
 but only use the one with max score (cosine value with question) 
 to update our trainable parameters. 
 
-**Note2**: In the training, I make word embedding to be trainable 
+**Note 2**: In the training, I make word embedding to be trainable 
 and initialize to pre-trained word embedding.
 
 
@@ -134,7 +134,9 @@ and initialize to pre-trained word embedding.
     </tr>
 </table>
 
-**Note**: Accuracy is equivalent to precision at top one answer
+**Note 3**: Accuracy is equivalent to precision at top one answer
 among about 500 answers for every question.
 In other words, it's considered to be correct if the model find out a right answer
 among a set of 500 answers which contains 1~3 right answers.
+
+**Note 4**: We can see running log in folder `log/` to learn more about training process.
