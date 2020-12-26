@@ -4,14 +4,15 @@ Attentive Pooling Networks
 Santos, Cicero dos, Ming Tan, Bing Xiang, and Bowen Zhou. "Attentive pooling networks." arXiv preprint arXiv:1602.03609 (2016).
 >https://arxiv.org/abs/1602.03609
 
-This project contains 4 models: QA-CNN, QA-biLSTM, AP-CNN and AP-biLSTM
+This project contains 4 models: QA-CNN, QA-biLSTM, AP-CNN and AP-biLSTM.
 
 # Environments
-  + python 3.8
-  + pytorch 1.7
+
++ python 3.8
++ pytorch 1.7
 
 # Dataset
-You need to prepare the following documents:  
+You have to prepare the following documents:  
 1. Dataset(`data/insuranceQA/*`)  
   Source: https://github.com/shuzi/insuranceQA/tree/master/V1
 
@@ -44,36 +45,36 @@ python test_only.py --model_name QA-biLSTM --trained_model model/QA-biLSTM202012
         <td align="center">epoch size</td>
         <td align="center">10</td>
         <td align="center">20</td>
-        <td align="center">150</td>
-        <td align="center">-</td>
+        <td align="center">100</td>
+        <td align="center">25</td>
     </tr>
     <tr>
         <td align="center">batch size</td>
         <td align="center">20</td>
         <td align="center">20</td>
         <td align="center">20</td>
-        <td align="center">-</td>
+        <td align="center">20</td>
     </tr>
     <tr>
         <td align="center">init. learning rate</td>
         <td align="center">0.1</td>
+        <td align="center">11.0</td>
+        <td align="center">0.01</td>
         <td align="center">1.1</td>
-        <td align="center">1.1</td>
-        <td align="center">-</td>
     </tr>
     <tr>
         <td align="center">lr decay</td>
         <td align="center">Exponential(0.92)</td>
         <td align="center">Reciprocal</td>
+        <td align="center">Exponential(0.99)</td>
         <td align="center">Reciprocal</td>
-        <td align="center">-</td>
     </tr>
     <tr>
         <td align="center">loss margin</td>
         <td align="center">0.1</td>
         <td align="center">0.1</td>
+        <td align="center">0.5</td>
         <td align="center">0.2</td>
-        <td align="center">-</td>
     </tr>
     <tr>
         <td align="center">kernel count/size</td>
@@ -115,21 +116,21 @@ and initialize to pre-trained word embedding.
     </tr>
     <tr>
         <td>QA-biLSTM</td>
-        <td>66.60%</td>
-        <td>67.89%</td>
-        <td>63.67%</td>
+        <td>66.90%</td>
+        <td>66.11%</td>
+        <td>63.00%</td>
     </tr>
     <tr>
         <td>AP-CNN</td>
-        <td>54.80%</td>
-        <td>53.61%</td>
-        <td>50.61%</td>
+        <td>61.90%</td>
+        <td>63.00%</td>
+        <td>59.17%</td>
     </tr>
     <tr>
         <td>AP-biLSTM</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
+        <td>60.90%</td>
+        <td>62.22%</td>
+        <td>58.11%</td>
     </tr>
 </table>
 
@@ -137,14 +138,3 @@ and initialize to pre-trained word embedding.
 among about 500 answers for every question.
 In other words, it's considered to be correct if the model find out a right answer
 among a set of 500 answers which contains 1~3 right answers.
-
-# Warning
-
-**该项目尚未调试完成，加入attention之后的效果不好！我还在继续调试！  
-若您发现效果差的原因，恳请您在issue区告知我，不胜感激！-- 2020.12.22**  
-**The project has not yet been successful, the performance with attention is POOR,
-please DO NOT use it for experiment!
-I will continue debugging when I have enough time!  
-If you find out the reason for the poor performance of the code,
-please tell me at issue.
-Thank you very much-- 12.22, 2020**
