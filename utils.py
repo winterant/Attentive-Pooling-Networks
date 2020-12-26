@@ -52,12 +52,11 @@ def load_embedding(word2vec_file):
     return word_emb, word_dict
 
 
-def evaluate(model, dataloader, device):
+def evaluate(model, dataloader):
     predict = defaultdict(list)
     total = 0
-    for batch in dataloader:
-        qid, q, a, y = batch
-        cos = model(q.to(device), a.to(device))
+    for qid, q, a, y in dataloader:
+        cos = model(q, a)
         for i, pred, label in zip(qid.numpy(), cos.detach().cpu().numpy(), y.numpy()):
             predict[i].append((pred, label))
         total += len(qid)

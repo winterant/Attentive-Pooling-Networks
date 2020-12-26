@@ -65,6 +65,10 @@ class QAModel(nn.Module):
                 self.coAttention = CoAttention(config.rnn_hidden * 2)
 
     def forward(self, questions, answers):
+        device = next(self.parameters()).device
+        questions = questions.to(device)
+        answers = answers.to(device)
+
         q_emb = self.embedding(questions)
         a_emb = self.embedding(answers)
         Q = self.encode(q_emb)
@@ -72,8 +76,8 @@ class QAModel(nn.Module):
         if 'AP' in self.model_name:
             rq, ra = self.coAttention(Q, A)
         else:
-            rq = Q.max(dim=-1).values
-            ra = A.max(dim=-1).values
+            rq = Q.max(dim=-1)[0]
+            ra = A.max(dim=-1)[0]
             rq = torch.tanh(rq)
             ra = torch.tanh(ra)
         cos = torch.sum(rq * ra, dim=-1) / (rq.norm(dim=-1) * ra.norm(dim=-1))
