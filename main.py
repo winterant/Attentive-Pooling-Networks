@@ -33,7 +33,7 @@ def train(train_dataloader, valid_dataloader, model, config, model_path):
             cos_neg = model(input_q, input_a)
             cos_neg = cos_neg.view(len(q), -1).max(dim=-1)[0]
 
-            loss = torch.max(torch.zeros(1).to(config.device), config.loss_margin - cos_pos + cos_neg).mean()
+            loss = torch.max(torch.zeros(1).to(cos_pos.device), config.loss_margin - cos_pos + cos_neg).mean()
             opt.zero_grad()
             loss.backward()
             opt.step()
