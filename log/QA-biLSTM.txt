@@ -1,0 +1,55 @@
+2020-12-26 17:15:49 INFO: Global Config:
+        PAD_WORD = <UNK>
+        a_length = 100
+        answer_dict_file = data/insuranceQA/answers.label.token_idx
+        batch_size = 20
+        device = cuda:2
+        kernel_count = 400
+        kernel_size = 3
+        l2_regularization = 1e-06
+        learning_rate = 11.0
+        loss_margin = 0.1
+        lr_decay = Reciprocal
+        lr_decay_gamma = 0.92
+        model_name = QA-biLSTM
+        punctuation_file = data/punctuations.txt
+        q_length = 20
+        qa_dev_file = data/insuranceQA/question.dev.label.token_idx.pool
+        qa_test1_file = data/insuranceQA/question.test1.label.token_idx.pool
+        qa_test2_file = data/insuranceQA/question.test2.label.token_idx.pool
+        qa_train_file = data/insuranceQA/question.train.token_idx.label
+        qa_vocab_file = data/insuranceQA/vocabulary
+        rnn_hidden = 150
+        test_batch_size = 512
+        train_epochs = 20
+        train_neg_count = 50
+        trained_model = model/model_name_here
+        word2vec_file = embedding/glove.6B.100d.txt
+
+2020-12-26 17:16:24 INFO: Dataset train: 18532 samples.
+2020-12-26 17:16:24 INFO: Dataset valid: 494985 samples.
+2020-12-26 17:17:09 INFO: Initial valid accuracy 14.20%, MRR 0.222161                               
+2020-12-26 17:22:20 INFO: Epoch   0; learning rate 11.0000; train loss 0.078586; valid accuracy 54.60%, MRR 0.6599
+2020-12-26 17:27:35 INFO: Epoch   1; learning rate 5.5000; train loss 0.050548; valid accuracy 61.40%, MRR 0.7171
+2020-12-26 17:32:41 INFO: Epoch   2; learning rate 3.6667; train loss 0.040259; valid accuracy 63.30%, MRR 0.7386
+2020-12-26 17:37:58 INFO: Epoch   3; learning rate 2.7500; train loss 0.034309; valid accuracy 64.80%, MRR 0.7539
+2020-12-26 17:45:23 INFO: Epoch   4; learning rate 2.2000; train loss 0.030146; valid accuracy 64.90%, MRR 0.7537
+2020-12-26 17:53:16 INFO: Epoch   5; learning rate 1.8333; train loss 0.027012; valid accuracy 65.50%, MRR 0.7579
+2020-12-26 18:01:05 INFO: Epoch   6; learning rate 1.5714; train loss 0.024724; valid accuracy 65.70%, MRR 0.7598
+2020-12-26 18:08:54 INFO: Epoch   7; learning rate 1.3750; train loss 0.022663; valid accuracy 66.10%, MRR 0.7618
+2020-12-26 18:16:41 INFO: Epoch   8; learning rate 1.2222; train loss 0.020964; valid accuracy 66.10%, MRR 0.7613
+2020-12-26 18:24:25 INFO: Epoch   9; learning rate 1.1000; train loss 0.019531; valid accuracy 66.70%, MRR 0.7629
+2020-12-26 18:31:50 INFO: Epoch  10; learning rate 1.0000; train loss 0.018258; valid accuracy 66.40%, MRR 0.7617
+2020-12-26 18:39:24 INFO: Epoch  11; learning rate 0.9167; train loss 0.017164; valid accuracy 66.80%, MRR 0.7639
+2020-12-26 18:47:19 INFO: Epoch  12; learning rate 0.8462; train loss 0.016168; valid accuracy 66.40%, MRR 0.7637
+2020-12-26 18:55:16 INFO: Epoch  13; learning rate 0.7857; train loss 0.015301; valid accuracy 66.60%, MRR 0.7632
+2020-12-26 19:02:59 INFO: Epoch  14; learning rate 0.7333; train loss 0.014474; valid accuracy 66.80%, MRR 0.7639
+2020-12-26 19:11:00 INFO: Epoch  15; learning rate 0.6875; train loss 0.013745; valid accuracy 66.80%, MRR 0.7641
+2020-12-26 19:18:54 INFO: Epoch  16; learning rate 0.6471; train loss 0.013054; valid accuracy 66.70%, MRR 0.7628
+2020-12-26 19:26:15 INFO: Epoch  17; learning rate 0.6111; train loss 0.012487; valid accuracy 66.90%, MRR 0.7650
+2020-12-26 19:32:11 INFO: Epoch  18; learning rate 0.5789; train loss 0.011892; valid accuracy 66.40%, MRR 0.7612
+2020-12-26 19:37:43 INFO: Epoch  19; learning rate 0.5500; train loss 0.011394; valid accuracy 66.90%, MRR 0.7658
+2020-12-26 19:37:43 INFO: End of training! Time used 8433 seconds.
+2020-12-26 19:38:31 INFO: Test accuracy 66.90%; MRR 0.7650 Time used 48S.
+2020-12-26 19:40:05 INFO: Test accuracy 66.11%; MRR 0.7576 Time used 79S.
+2020-12-26 19:41:41 INFO: Test accuracy 63.00%; MRR 0.7313 Time used 81S.

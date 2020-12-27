@@ -46,7 +46,7 @@ python test_only.py --model_name QA-biLSTM --trained_model model/QA-biLSTM202012
         <td align="center">10</td>
         <td align="center">20</td>
         <td align="center">100</td>
-        <td align="center">25</td>
+        <td align="center">40</td>
     </tr>
     <tr>
         <td align="center">batch size</td>
@@ -60,14 +60,14 @@ python test_only.py --model_name QA-biLSTM --trained_model model/QA-biLSTM202012
         <td align="center">0.1</td>
         <td align="center">11.0</td>
         <td align="center">0.01</td>
-        <td align="center">1.1</td>
+        <td align="center">0.9</td>
     </tr>
     <tr>
         <td align="center">lr decay</td>
         <td align="center">Exponential(0.92)</td>
         <td align="center">Reciprocal</td>
         <td align="center">Exponential(0.99)</td>
-        <td align="center">Reciprocal</td>
+        <td align="center">Exponential(0.92)</td>
     </tr>
     <tr>
         <td align="center">loss margin</td>
@@ -128,9 +128,9 @@ and initialize to pre-trained word embedding.
     </tr>
     <tr>
         <td>AP-biLSTM</td>
-        <td>60.90%</td>
-        <td>62.22%</td>
-        <td>58.11%</td>
+        <td>63.60%</td>
+        <td>63.44%</td>
+        <td>60.44%</td>
     </tr>
 </table>
 
