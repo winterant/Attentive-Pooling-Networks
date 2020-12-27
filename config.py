@@ -9,24 +9,13 @@ class Config:
     train_epochs = 20
     batch_size = 20
     test_batch_size = 128
-    learning_rate = 1.1
+    learning_rate = 11.0
     lr_decay = 'Reciprocal'
     # lr_decay = 'Exponential'
-    lr_decay_gamma = 0.92  # lr decay base number of ExponentialLR
+    lr_decay_gamma = 1.0  # lr decay base number of ExponentialLR
     l2_regularization = 1e-6
+
     loss_margin = 0.1
-
-    answer_dict_file = 'data/insuranceQA/answers.label.token_idx'
-    qa_vocab_file = 'data/insuranceQA/vocabulary'
-    qa_train_file = 'data/insuranceQA/question.train.token_idx.label'
-    qa_dev_file = 'data/insuranceQA/question.dev.label.token_idx.pool'
-    qa_test1_file = 'data/insuranceQA/question.test1.label.token_idx.pool'
-    qa_test2_file = 'data/insuranceQA/question.test2.label.token_idx.pool'
-
-    word2vec_file = 'embedding/glove.6B.100d.txt'
-    punctuation_file = 'data/punctuations.txt'
-    trained_model = 'model/model_name_here'  # The trained model, uses in test_only.py
-
     train_neg_count = 50  # Amount of random negative answers for every question in training
     q_length = 20
     a_length = 100
@@ -38,6 +27,16 @@ class Config:
     kernel_count = 400
     kernel_size = 3
     rnn_hidden = 150
+
+    answer_dict_file = 'data/insuranceQA/answers.label.token_idx'
+    qa_vocab_file = 'data/insuranceQA/vocabulary'
+    qa_train_file = 'data/insuranceQA/question.train.token_idx.label'
+    qa_dev_file = 'data/insuranceQA/question.dev.label.token_idx.pool'
+    qa_test1_file = 'data/insuranceQA/question.test1.label.token_idx.pool'
+    qa_test2_file = 'data/insuranceQA/question.test2.label.token_idx.pool'
+    word2vec_file = 'embedding/glove.6B.100d.txt'
+    punctuation_file = 'data/punctuations.txt'
+    trained_model = 'model/model_name_here'  # The trained model, uses in test_only.py
 
     def __init__(self):
         attributes = inspect.getmembers(self, lambda a: not inspect.isfunction(a))

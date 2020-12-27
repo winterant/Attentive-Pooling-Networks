@@ -85,7 +85,7 @@ if __name__ == '__main__':
     valid_data = IQADataset(word_dict, config, config.qa_dev_file, mode='valid')
     logger.info(train_data)
     logger.info(valid_data)
-    train_dlr = DataLoader(train_data, batch_size=config.batch_size, num_workers=4)
+    train_dlr = DataLoader(train_data, batch_size=config.batch_size, num_workers=4, shuffle=True)
     valid_dlr = DataLoader(valid_data, batch_size=config.test_batch_size, num_workers=4)
 
     # Train
