@@ -43,7 +43,7 @@ python test_only.py --model_name QA-biLSTM --trained_model model/QA-biLSTM202012
     </tr>
     <tr>
         <td align="center">epoch size</td>
-        <td align="center">10</td>
+        <td align="center">40</td>
         <td align="center">20</td>
         <td align="center">100</td>
         <td align="center">40</td>
@@ -57,14 +57,14 @@ python test_only.py --model_name QA-biLSTM --trained_model model/QA-biLSTM202012
     </tr>
     <tr>
         <td align="center">init. learning rate</td>
-        <td align="center">0.1</td>
+        <td align="center">0.5</td>
         <td align="center">11.0</td>
         <td align="center">0.01</td>
-        <td align="center">0.9</td>
+        <td align="center">0.7</td>
     </tr>
     <tr>
         <td align="center">lr decay</td>
-        <td align="center">Exponential(0.92)</td>
+        <td align="center">Exponential(0.96)</td>
         <td align="center">Reciprocal</td>
         <td align="center">Exponential(0.99)</td>
         <td align="center">Exponential(0.92)</td>
@@ -110,9 +110,9 @@ and initialize to pre-trained word embedding.
     </tr>
     <tr>
         <td>QA-CNN</td>
-        <td>60.80%</td>
-        <td>62.72%</td>
-        <td>59.06%</td>
+        <td>59.90%</td>
+        <td>60.94%</td>
+        <td>56.22%</td>
     </tr>
     <tr>
         <td>QA-biLSTM</td>
@@ -128,9 +128,9 @@ and initialize to pre-trained word embedding.
     </tr>
     <tr>
         <td>AP-biLSTM</td>
-        <td>63.60%</td>
-        <td>63.44%</td>
-        <td>60.44%</td>
+        <td>65.20%</td>
+        <td>67.00%</td>
+        <td>62.72%</td>
     </tr>
 </table>
 
