@@ -9,20 +9,20 @@ class Config:
     train_epochs = 20
     batch_size = 20
     test_batch_size = 128
-    learning_rate = 11.0
+    learning_rate = 1.1
     lr_decay = 'Reciprocal'
     # lr_decay = 'Exponential'
     lr_decay_gamma = 1.0  # lr decay base number of ExponentialLR
     l2_regularization = 1e-6
 
-    loss_margin = 0.1
+    loss_margin = 0.5
     train_neg_count = 50  # Amount of random negative answers for every question in training
     q_length = 20
     a_length = 100
     PAD_WORD = '<UNK>'
     # model_name = 'QA-CNN'
-    model_name = 'QA-biLSTM'
-    # model_name = 'AP-CNN'
+    # model_name = 'QA-biLSTM'
+    model_name = 'AP-CNN'
     # model_name = 'AP-biLSTM'
     kernel_count = 400
     kernel_size = 3

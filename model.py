@@ -28,9 +28,12 @@ class BiLSTM(nn.Module):
 
 
 class CoAttention(nn.Module):
-    def __init__(self, hidden_size):
+    def __init__(self, hidden_size, init_U='randn'):
         super().__init__()
-        self.U = nn.Parameter(torch.randn(hidden_size, hidden_size))
+        if init_U == 'zeros':
+            self.U = nn.Parameter(torch.zeros(hidden_size, hidden_size))
+        else:
+            self.U = nn.Parameter(torch.randn(hidden_size, hidden_size))
 
     def forward(self, Q, A):
         G = Q.transpose(-1, -2) @ self.U.expand(Q.shape[0], -1, -1) @ A
@@ -58,7 +61,7 @@ class QAModel(nn.Module):
         if 'CNN' in config.model_name:
             self.encode = CNN(self.embedding.embedding_dim, config.kernel_count, config.kernel_size)
             if 'AP' in config.model_name:
-                self.coAttention = CoAttention(config.kernel_count)
+                self.coAttention = CoAttention(config.kernel_count, init_U='zeros')
         elif 'biLSTM' in config.model_name:
             self.encode = BiLSTM(self.embedding.embedding_dim, config.rnn_hidden)
             if 'AP' in config.model_name:

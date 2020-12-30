@@ -48,4 +48,4 @@ if __name__ == '__main__':
     test(valid_data, config.test_batch_size, Model)
     test(test1_data, config.test_batch_size, Model)
     test(test2_data, config.test_batch_size, Model)
-    # test_analysis(test2_data, config.test_batch_size, Model)
+    # test_analysis(test2_data, 1, Model)

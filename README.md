@@ -23,12 +23,21 @@ Download from https://nlp.stanford.edu/projects/glove
 
 Train and evaluate:
 ```
-python main.py --model_name QA-biLSTM
+python main.py --model_name QA-CNN --train_epochs 40 --learning_rate 0.5 --lr_decay Exponential --lr_decay_gamma 0.96 --loss_margin 0.1 --kernel_count 4000 --kernel_size 2
+```
+```
+python main.py --model_name QA-biLSTM --train_epochs 20 --learning_rate 11 --lr_decay Reciprocal --loss_margin 0.1 --rnn_hidden 150
+```
+```
+python main.py --model_name AP-CNN --train_epochs 20 --learning_rate 1.1 --lr_decay Reciprocal --loss_margin 0.5 --kernel_count 400 --kernel_size 3
+```
+```
+python main.py --model_name AP-biLSTM --train_epochs 40 --learning_rate 0.7 --lr_decay Exponential --lr_decay_gamma 0.92 --loss_margin 0.2 --rnn_hidden 150
 ```
 
 Only test:
 ```
-python test_only.py --model_name QA-biLSTM --trained_model model/QA-biLSTM20201224_105449.pt
+python test_only.py --model_name AP-biLSTM --trained_model model/AP-biLSTM20201224_105449.pt
 ```
 
 # Experiment
@@ -45,28 +54,25 @@ python test_only.py --model_name QA-biLSTM --trained_model model/QA-biLSTM202012
         <td align="center">epoch size</td>
         <td align="center">40</td>
         <td align="center">20</td>
-        <td align="center">100</td>
+        <td align="center">20</td>
         <td align="center">40</td>
     </tr>
     <tr>
         <td align="center">batch size</td>
-        <td align="center">20</td>
-        <td align="center">20</td>
-        <td align="center">20</td>
-        <td align="center">20</td>
+        <td align="center" colspan="4">20</td>
     </tr>
     <tr>
         <td align="center">init. learning rate</td>
         <td align="center">0.5</td>
         <td align="center">11.0</td>
-        <td align="center">0.01</td>
+        <td align="center">1.1</td>
         <td align="center">0.7</td>
     </tr>
     <tr>
         <td align="center">lr decay</td>
         <td align="center">Exponential(0.96)</td>
         <td align="center">Reciprocal</td>
-        <td align="center">Exponential(0.99)</td>
+        <td align="center">Reciprocal</td>
         <td align="center">Exponential(0.92)</td>
     </tr>
     <tr>
@@ -122,9 +128,9 @@ and initialize to pre-trained word embedding.
     </tr>
     <tr>
         <td>AP-CNN</td>
-        <td>61.90%</td>
-        <td>63.00%</td>
-        <td>59.17%</td>
+        <td>62.20%</td>
+        <td>65.06%</td>
+        <td>58.83%</td>
     </tr>
     <tr>
         <td>AP-biLSTM</td>
